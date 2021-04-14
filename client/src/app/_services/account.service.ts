@@ -44,5 +44,5 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next({username:null, token: null});//Does not accept: .next(null)
-  }//does seemingly create problem on logout. Make it seem as if there is still a user logged in.
+  }//does create problem on logout. Empty user is still a user that's logged in.
 }
