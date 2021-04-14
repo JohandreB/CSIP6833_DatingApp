@@ -43,6 +43,6 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
-    this.currentUserSource.next({username:null, token: null});//Does not accept: .next(null)
+    this.currentUserSource.next(null);//Does not accept: .next(null) if strict: true
   }//does create problem on logout. Empty user is still a user that's logged in.
 }
