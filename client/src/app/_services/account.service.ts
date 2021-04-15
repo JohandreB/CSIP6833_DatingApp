@@ -17,7 +17,7 @@ export class AccountService {
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(  //casting to User
       map((response: User) => {
-        const user = response;
+        const user = response as User;//as User
         if(user){
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
