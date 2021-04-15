@@ -28,6 +28,8 @@ namespace API.Services
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = TokenValidationParameters.DefaultAuthenticationType,//Default issuer
+                //SigningCredentials = new SigningCredentials(), Credentials might be what is causing the problem of token not having a signature
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7)
             };
