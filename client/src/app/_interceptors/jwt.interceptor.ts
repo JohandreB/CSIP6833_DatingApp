@@ -22,10 +22,10 @@ export class JwtInterceptor implements HttpInterceptor {
     if(currentUser){
       request = request.clone({
         setHeaders: {
-          Authorization: ('Bearer ' + currentUser.token)//Didn't use back ticks
+          Authorization: `Bearer ${currentUser.token}`
         }
       })
-    }
+    }//adds authorization to the request if a user is logged in
 
     return next.handle(request);
   }

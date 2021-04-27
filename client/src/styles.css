@@ -23,7 +23,7 @@
   }
   
   .member-tabset > .nav-tabs > li.active {
-    border-bottom: 4px solid #377188;
+    border-bottom: 4px solid #E95420; /*original for 'united', #377188 for 'yeti';*/
     position: relative;
   }
   
