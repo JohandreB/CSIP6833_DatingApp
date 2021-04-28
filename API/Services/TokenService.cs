@@ -28,10 +28,10 @@ namespace API.Services
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Issuer = TokenValidationParameters.DefaultAuthenticationType,//Default issuer
-                //SigningCredentials = new SigningCredentials(), Credentials might be what is causing the problem of token not having a signature
+                //Issuer = TokenValidationParameters.DefaultAuthenticationType,//Default issuer
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7)
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = creds
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -26,7 +26,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]//To bypass error regarding signature for testing purposes
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             var users = await _userRepository.GetMembersAsync();
@@ -34,17 +33,14 @@ namespace API.Controllers
         }
 
         [HttpGet("{username}")]
-        [AllowAnonymous]//To bypass error regarding signature for testing purposes
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             return await _userRepository.GetMemberAsync(username);
         }
 
         [HttpPut]
-        [AllowAnonymous]//To bypass error regarding signature for testing purposes
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            //Problem with token claims. User.GetUsername() Method in ClaimsPrincipleExtensions
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
 
             _mapper.Map(memberUpdateDto, user);
@@ -57,10 +53,8 @@ namespace API.Controllers
         }
 
         [HttpPost("add-photo")]
-        [AllowAnonymous]//To work around the token signature error
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-            //Same issue...user can't be found because of token problem
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());//eager loading of photos as well with this method
 
             var result = await _photoService.AddPhotoAsync(file);
