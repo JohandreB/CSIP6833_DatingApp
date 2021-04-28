@@ -20,8 +20,7 @@ export class AccountService {
       map((response: User) => {
         const user = response as User;//as User
         if(user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     )
@@ -31,19 +30,19 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if(user){
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     )
   }
 
   setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
   logout() {
     localStorage.removeItem('user');
-    this.currentUserSource.next(null);//Does not accept: .next(null) if strict: true
-  }//does create problem on logout. Empty user is still a user that's logged in.
+    this.currentUserSource.next(null);//Does not accept: .next(null) if strict: true. Does then create problem on logout. Empty user is still a user that's logged in.
+  }
 }
