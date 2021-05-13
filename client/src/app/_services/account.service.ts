@@ -37,6 +37,9 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles)? user.roles = roles : user.roles.push(roles);//checks if roles are array, if not create an array with 1 element
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -44,5 +47,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);//Does not accept: .next(null) if strict: true. Does then create problem on logout. Empty user is still a user that's logged in.
+  }
+
+  getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }
