@@ -11,3 +11,12 @@ img.img-thumnail {
 input[type=file]{
     color: transparent;
 }
+
+.unapproved {
+    opacity: 0.2;
+}
+
+.approval-text {
+    position: absolute;
+    bottom: 30%;
+}

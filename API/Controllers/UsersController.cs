@@ -44,7 +44,8 @@ namespace API.Controllers
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _unitOfWork.UserRepository.GetMemberAsync(username);
+            bool IsCurrentUser = (User.GetUsername() == username);
+            return await _unitOfWork.UserRepository.GetMemberAsync(username, IsCurrentUser);
         }
 
         [HttpPut]
@@ -76,10 +77,10 @@ namespace API.Controllers
                 PublicId = result.PublicId
             };//Creating photo entity from Cloudinary return values
 
-            if (user.Photos.Count == 0)
-            {
-                photo.IsMain = true;
-            }//only set as main photo when it is the first photo to be uploaded by user
+            //if (user.Photos.Count == 0)//Removed as photos first need approval
+            //{
+            //    photo.IsMain = true;
+            //}//only set as main photo when it is the first photo to be uploaded by user
 
             user.Photos.Add(photo);
 
