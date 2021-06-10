@@ -103,7 +103,7 @@ namespace API.Controllers
             {
                 var result = await _photoService.DeletePhotoAsync(photo.PublicId);
 
-                if (result.Result == "ok")//Delete from database
+                if (result.Result == "ok")//Delete from database if successfully deleted from cloudinary
                 {
                     _unitOfWork.PhotoRepository.RemovePhoto(photo);
                 }
