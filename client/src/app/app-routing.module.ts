@@ -10,9 +10,11 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { VisitsComponent } from './visits/visits-component/visits.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { VIPGuard } from './_guards/vip.guard';
 import { MemberDetailedResolver } from './_resolvers/member-detailed-resolver';
 
 const routes: Routes = [
@@ -28,6 +30,7 @@ const routes: Routes = [
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
       { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] },
+      { path: 'visits', component: VisitsComponent, canActivate: [VIPGuard]},
     ]},
   {path: 'errors', component: TestErrorsComponent},
   {path: 'not-found', component: NotFoundComponent},

@@ -9,6 +9,7 @@ namespace API.Interfaces
         ILikesRepository LikesRepository {get; }
 
         IPhotoRepository PhotoRepository {get; }
+        IVisitsRepository VisitsRepository {get; }
 
         Task<bool> Complete();
 

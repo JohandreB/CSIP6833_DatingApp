@@ -19,6 +19,7 @@ export class MembersService {
   memberCache = new Map();
   user: User;
   userParams: UserParams;
+  periodParam: string;
 
   constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
@@ -96,6 +97,17 @@ export class MembersService {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('predicate', predicate);
     return getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params, this.http);
+  }
+
+  addVisit(username: string) {
+    return this.http.post(this.baseUrl + 'visits/' + username, {});
+  }
+  
+  getVisits(predicate: string, pageNumber, pageSize) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    params = params.append('visitPeriod', this.periodParam);
+    return getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'visits', params, this.http);
   }
 
 }

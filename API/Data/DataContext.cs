@@ -22,6 +22,7 @@ namespace API.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<UserVisit> Visits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -58,6 +59,23 @@ namespace API.Data
                 .HasOne(s => s.LikedUser)
                 .WithMany(l => l.LikedByUsers)
                 .HasForeignKey(s => s.LikedUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Specify primary key
+            builder.Entity<UserVisit>()
+                .HasKey(k => new { k.VisiterUserId, k.VisitedUserId });
+
+            // Set the relationships
+            builder.Entity<UserVisit>()
+                .HasOne(s => s.VisiterUser)
+                .WithMany(l => l.VisitedUsers)
+                .HasForeignKey(s => s.VisiterUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserVisit>()
+                .HasOne(s => s.VisitedUser)
+                .WithMany(l => l.VisitedByUsers)
+                .HasForeignKey(s => s.VisitedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()

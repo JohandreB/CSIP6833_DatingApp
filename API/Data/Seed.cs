@@ -21,7 +21,8 @@ namespace API.Data
             {
                 new AppRole{Name = "Member"},
                 new AppRole{Name = "Admin"},
-                new AppRole{Name = "Moderator"}
+                new AppRole{Name = "Moderator"},
+                new AppRole{Name = "VIP"}
             };
 
             foreach (var role in roles)
@@ -38,7 +39,7 @@ namespace API.Data
 
             var admin = new AppUser{UserName = "admin"};
             await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[]{"Admin", "Moderator"});
+            await userManager.AddToRolesAsync(admin, new[]{"Admin", "Moderator", "VIP"});
         }
     }
 }
